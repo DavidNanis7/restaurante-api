@@ -16,28 +16,28 @@ pipeline {
         stage('2. Instalacion de Dependencias') {
             steps {
                 echo 'Instalando modulos de Node.js...'
-                sh 'npm install'
+                bat 'npm install' // <- Cambiado sh por bat
             }
         }
 
         stage('3. Pruebas Automatizadas (Test)') {
             steps {
                 echo 'Ejecutando la suite de pruebas unitarias con Jest...'
-                sh 'npm test'
+                bat 'npm test' // <- Cambiado sh por bat
             }
         }
 
         stage('4. Validacion de Calidad y Seguridad') {
             steps {
                 echo 'Ejecutando analisis estatico de codigo...'
-                sh 'echo "Analisis de vulnerabilidades completado. 0 fallos criticos."'
+                bat 'echo "Analisis de vulnerabilidades completado. 0 fallos criticos."' // <- Cambiado sh por bat
             }
         }
 
         stage('5. Despliegue Simulado (Staging)') {
             steps {
                 echo 'Compilando y desplegando la aplicacion en entorno de pruebas...'
-                sh 'echo "API corriendo simuladamente en entorno de Staging."'
+                bat 'echo "API corriendo simuladamente en entorno de Staging."' // <- Cambiado sh por bat
             }
         }
     }
