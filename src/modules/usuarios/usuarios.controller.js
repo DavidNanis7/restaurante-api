@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+// Cambiamos la ruta base a propósito para que el test no la encuentre en '/'
+router.get('/romper-api', (req, res) => {
     res.json([
         { id: 1, nombre: 'Juan Perez', rol: 'cliente' },
         { id: 2, nombre: 'Ana Gomez', rol: 'admin' }
