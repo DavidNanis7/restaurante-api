@@ -3,13 +3,15 @@ pipeline {
 
     environment {
         NODE_ENV = 'test'
+        // Agrega la carpeta donde tienes instalado Node.js a la sesión de Jenkins
+        PATH = "C:\\Program Files\\nodejs;${env.PATH}"
     }
 
     stages {
         stage('Checkout SCM') {
             steps {
                 echo 'Descargando codigo desde el repositorio...'
-                checkout scm // <-- Esto faltaba para que descargue el código real
+                checkout scm
             }
         }
 
