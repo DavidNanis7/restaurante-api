@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout SCM') {
             steps {
-                echo 'Descargando codigo desde el repositorio de GitHub...'
+                echo 'Descargando codigo desde el repositorio...'
             }
         }
 
@@ -36,24 +36,24 @@ pipeline {
         stage('Validacion de Calidad') {
             steps {
                 echo 'Analizando la calidad estatica del codigo...'
-                bat 'echo Analisis estatico completado sin fallos.'
+                bat 'echo Analisis estatico completado.'
             }
         }
 
         stage('Despliegue Simulado') {
             steps {
-                echo 'Desplegando simuladamente en entorno de Staging...'
-                bat 'echo API corriendo correctamente en Staging.'
+                echo 'Desplegando en entorno de Staging...'
+                bat 'echo Aplicacion corriendo en Staging.'
             }
         }
     }
 
     post {
         success {
-            echo '¡Pipeline ejecutado con EXITO! El codigo es estable y seguro.'
+            echo '¡Pipeline ejecutado con EXITO!'
         }
         failure {
-            echo '¡ALERTA! El pipeline ha FALLADO. Revisar los logs detallados.'
+            echo '¡ALERTA! El pipeline ha FALLADO.'
         }
     }
 }
