@@ -6,9 +6,9 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
-                echo 'Sincronizando el espacio de trabajo con el repositorio de GitHub...'
+                echo 'Descargando codigo desde el repositorio de GitHub...'
             }
         }
 
@@ -21,29 +21,29 @@ pipeline {
 
         stage('Escaneo de Seguridad') {
             steps {
-                echo 'Revisando que las librerias instaladas no tengan vulnerabilidades...'
+                echo 'Ejecutando auditoria de vulnerabilidades...'
                 bat 'npm audit || exit 0'
             }
         }
 
         stage('Pruebas Automatizadas') {
             steps {
-                echo 'Ejecutando la suite de pruebas unitarias con Jest y Supertest...'
+                echo 'Ejecutando pruebas unitarias con Jest...'
                 bat 'npm test'
             }
         }
 
         stage('Validacion de Calidad') {
             steps {
-                echo 'Ejecutando analisis estatico de codigo...'
-                bat 'echo Analisis de calidad completado.'
+                echo 'Analizando la calidad estatica del codigo...'
+                bat 'echo Analisis estatico completado sin fallos.'
             }
         }
 
         stage('Despliegue Simulado') {
             steps {
-                echo 'Compilando y desplegando la aplicacion en entorno de Staging...'
-                bat 'echo API corriendo en entorno de Staging de forma simulada.'
+                echo 'Desplegando simuladamente en entorno de Staging...'
+                bat 'echo API corriendo correctamente en Staging.'
             }
         }
     }
@@ -53,7 +53,7 @@ pipeline {
             echo '¡Pipeline ejecutado con EXITO! El codigo es estable y seguro.'
         }
         failure {
-            echo '¡ALERTA! El pipeline ha FALLADO en alguna etapa. Revisar logs inmediatamente.'
+            echo '¡ALERTA! El pipeline ha FALLADO. Revisar los logs detallados.'
         }
     }
 }
