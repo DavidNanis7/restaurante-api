@@ -29,9 +29,9 @@ pipeline {
 
         // --- NUEVA ETAPA DE SONARQUBE ---
         stage('3.5. Analisis de Calidad (SonarQube)') {
-            steps {
-                echo 'Iniciando escaneo de codigo estatico y vulnerabilidades con SonarQube...'
-                bat 'npm run sonar'
+    steps {
+        echo 'Iniciando el analisis en SonarQube...'
+        bat 'sonar-scanner -Dsonar.projectKey=restaurante-api -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=TU_TOKEN'
             }
         }
 
