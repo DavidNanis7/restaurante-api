@@ -20,19 +20,6 @@ pipeline {
             }
         }
 
-        // ====================================================================
-        // ESTA ES LA NUEVA ETAPA DE SEGURIDAD QUE VAMOS A AÑADIR:
-        // ====================================================================
-        stage('2.5. Escaneo de Seguridad (SecOps)') {
-            steps {
-                echo 'Revisando que las librerias instaladas no tengan vulnerabilidades...'
-                // Usamos "|| exit 0" para que si encuentra advertencias de seguridad leves,
-                // el pipeline nos avise pero NO se detenga por completo.
-                bat 'npm audit || exit 0' 
-            }
-        }
-        // ====================================================================
-
         stage('3. Pruebas Automatizadas (Test)') {
             steps {
                 echo 'Ejecutando la suite de pruebas unitarias con Jest...'
@@ -40,10 +27,18 @@ pipeline {
             }
         }
 
+        // --- NUEVA ETAPA DE SONARQUBE ---
+        stage('3.5. Analisis de Calidad (SonarQube)') {
+            steps {
+                echo 'Iniciando escaneo de codigo estatico y vulnerabilidades con SonarQube...'
+                bat 'npm run sonar'
+            }
+        }
+
         stage('4. Validacion de Calidad y Seguridad') {
             steps {
                 echo 'Ejecutando analisis estatico de codigo...'
-                bat 'echo "Analisis de vulnerabilidades completado. 0 fallos criticos."'
+                bat 'echo "Analisis complementario finalizado."'
             }
         }
 
@@ -57,7 +52,7 @@ pipeline {
 
     post {
         success {
-            echo '¡Pipeline ejecutado con EXITO! El codigo es estable y seguro.'
+            echo '¡Pipeline ejecutado con EXITO! El codigo es estable, seguro y aprobado por SonarQube.'
         }
         failure {
             echo '¡ALERTA! El pipeline ha FALLADO en alguna etapa. Revisar logs inmediatamente.'
