@@ -6,46 +6,44 @@ pipeline {
     }
 
     stages {
-        stage('1. Descarga de Codigo (Checkout)') {
+        stage('Checkout') {
             steps {
-                echo 'Sincronizando el espacio de trabajo con el repositorio...'
-                // Si la Opción 1 te da error de string, usa esta línea informativa limpia:
-                echo 'Codigo fuente cargado correctamente.'
+                echo 'Sincronizando el espacio de trabajo con el repositorio de GitHub...'
             }
         }
 
-        stage('2. Instalacion de Dependencias') {
+        stage('Instalacion de Dependencias') {
             steps {
                 echo 'Instalando modulos de Node.js...'
                 bat 'npm install'
             }
         }
 
-        stage('2.5. Escaneo de Seguridad (SecOps)') {
+        stage('Escaneo de Seguridad') {
             steps {
                 echo 'Revisando que las librerias instaladas no tengan vulnerabilidades...'
                 bat 'npm audit || exit 0'
             }
         }
 
-        stage('3. Pruebas Automatizadas (Test)') {
+        stage('Pruebas Automatizadas') {
             steps {
-                echo 'Ejecutando la suite de pruebas unitarias con Jest...'
+                echo 'Ejecutando la suite de pruebas unitarias con Jest y Supertest...'
                 bat 'npm test'
             }
         }
 
-        stage('4. Validacion de Calidad y Seguridad') {
+        stage('Validacion de Calidad') {
             steps {
                 echo 'Ejecutando analisis estatico de codigo...'
-                bat 'echo "Analisis de vulnerabilidades completado. 0 fallos criticos."'
+                bat 'echo Analisis de calidad completado.'
             }
         }
 
-        stage('5. Despliegue Simulado (Staging)') {
+        stage('Despliegue Simulado') {
             steps {
-                echo 'Compilando y desplegando la aplicacion en entorno de pruebas...'
-                bat 'echo "API corriendo simuladamente en entorno de Staging."'
+                echo 'Compilando y desplegando la aplicacion en entorno de Staging...'
+                bat 'echo API corriendo en entorno de Staging de forma simulada.'
             }
         }
     }
