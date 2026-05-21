@@ -9,6 +9,7 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 echo 'Descargando codigo desde el repositorio...'
+                checkout scm // <-- Esto faltaba para que descargue el código real
             }
         }
 
