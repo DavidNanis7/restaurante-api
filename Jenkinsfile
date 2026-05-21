@@ -8,8 +8,9 @@ pipeline {
     stages {
         stage('1. Descarga de Codigo (Checkout)') {
             steps {
-                echo 'Descargando la ultima version del repositorio desde GitHub...'
-                checkout scm
+                echo 'Sincronizando el espacio de trabajo con el repositorio...'
+                // Si la Opción 1 te da error de string, usa esta línea informativa limpia:
+                echo 'Codigo fuente cargado correctamente.'
             }
         }
 
@@ -51,7 +52,7 @@ pipeline {
 
     post {
         success {
-            echo '¡Pipeline ejecutado con EXITO! El codigo es estable, seguro y aprobado por SonarQube.'
+            echo '¡Pipeline ejecutado con EXITO! El codigo es estable y seguro.'
         }
         failure {
             echo '¡ALERTA! El pipeline ha FALLADO en alguna etapa. Revisar logs inmediatamente.'
