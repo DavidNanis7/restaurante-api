@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "sonar": "node sonar-project.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,4 @@
     "sonarqube-scanner": "^4.3.6",
     "supertest": "^7.0.0"
   }
-} "scripts": {
-  "test": "jest",
-  "sonar": "node sonar-project.js"
 }
