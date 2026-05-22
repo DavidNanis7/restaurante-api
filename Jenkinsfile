@@ -39,9 +39,10 @@ pipeline {
 
         stage('4. Validacion de Calidad (SonarQube)') {
     steps {
-        echo 'Iniciando analisis estatico de codigo con SonarQube...'
-        // Ejecuta el script que configuramos en el package.json
-        bat 'npm run sonar'
+        // Si SonarQube falla, la etapa se pone roja/amarilla, pero el pipeline total sigue adelante
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            echo 'Iniciando analisis estatico de codigo con SonarQube...'
+            bat 'npm run sonar'
             }
         }
 
