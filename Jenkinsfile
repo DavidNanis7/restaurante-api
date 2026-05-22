@@ -37,10 +37,11 @@ pipeline {
             }
         }
 
-        stage('Validacion de Calidad') {
-            steps {
-                echo 'Analizando la calidad estatica del codigo...'
-                bat 'echo Analisis estatico completado.'
+        stage('4. Validacion de Calidad (SonarQube)') {
+    steps {
+        echo 'Iniciando analisis estatico de codigo con SonarQube...'
+        // Ejecuta el script que configuramos en el package.json
+        bat 'npm run sonar'
             }
         }
 
