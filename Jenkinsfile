@@ -3,63 +3,61 @@ pipeline {
 
     environment {
         NODE_ENV = 'test'
-        // Agrega la carpeta donde tienes instalado Node.js a la sesión de Jenkins
-        PATH = "C:\\Program Files\\nodejs;${env.PATH}"
     }
 
     stages {
-        stage('Checkout SCM') {
+        stage('1. Descarga de Codigo (Checkout)') {
             steps {
-                echo 'Descargando codigo desde el repositorio...'
+                echo 'Descargando la ultima version del repositorio desde GitHub...'
                 checkout scm
             }
         }
 
-        stage('Instalacion de Dependencias') {
+        stage('2. Instalacion de Dependencias') {
             steps {
                 echo 'Instalando modulos de Node.js...'
                 bat 'npm install'
             }
         }
 
-        stage('Escaneo de Seguridad') {
+        stage('2.5. Escaneo de Seguridad (SecOps)') {
             steps {
-                echo 'Ejecutando auditoria de vulnerabilidades...'
+                echo 'Revisando que las librerias instaladas no tengan vulnerabilidades...'
                 bat 'npm audit || exit 0'
             }
         }
 
-        stage('Pruebas Automatizadas') {
+        stage('3. Pruebas Automatizadas (Test)') {
             steps {
-                echo 'Ejecutando pruebas unitarias con Jest...'
-                // El "|| exit 0" obliga a la terminal a responder con éxito (0) incluso si Jest falla
-                bat 'npm test || exit 0'
+                echo 'Ejecutando la suite de pruebas unitarias con Jest...'
+                bat 'npm test'
             }
         }
 
         stage('4. Validacion de Calidad (SonarQube)') {
-    steps {
-        // Si SonarQube falla, la etapa se pone roja/amarilla, pero el pipeline total sigue adelante
-        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-            echo 'Iniciando analisis estatico de codigo con SonarQube...'
-            bat 'npm run sonar'
+            steps {
+                // Si SonarQube falla o está apagado, la etapa fallará pero el pipeline CONTINUARÁ en verde
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    echo 'Iniciando analisis estatico de codigo con SonarQube...'
+                    bat 'npm run sonar'
+                }
             }
         }
 
-        stage('Despliegue Simulado') {
+        stage('5. Despliegue Simulado (Staging)') {
             steps {
-                echo 'Desplegando en entorno de Staging...'
-                bat 'echo Aplicacion corriendo en Staging.'
+                echo 'Compilando y desplegando la aplicacion en entorno de pruebas...'
+                bat 'echo "API corriendo simuladamente en entorno de Staging."'
             }
         }
     }
 
     post {
         success {
-            echo '¡Pipeline ejecutado con EXITO!'
+            echo '¡Pipeline ejecutado con EXITO! El codigo es estable.'
         }
         failure {
-            echo '¡ALERTA! El pipeline ha FALLADO.'
+            echo '¡ALERTA! El pipeline ha FALLADO en alguna etapa estructural. Revisar logs.'
         }
     }
 }
