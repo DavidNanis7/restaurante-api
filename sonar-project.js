@@ -1,13 +1,14 @@
-const sonarqubeScanner = require('sonarqube-scanner');
+// Modifica la importación agregando las llaves { }
+const { scanner } = require('sonarqube-scanner');
 
-sonarqubeScanner({
+// Llama directamente a "scanner" en lugar de "sonarqubeScanner"
+scanner({
   serverUrl: 'http://localhost:9000',
   options: {
     'sonar.projectKey': 'restaurante-api',
     'sonar.projectName': 'API Sistema Restaurante',
     'sonar.sources': 'src',
     'sonar.tests': 'src/tests',
-    // ¡AQUÍ ES DONDE VA LA LÍNEA QUE DIO EL ERROR ANTERIOR!
     'sonar.javascript.environments': '["node", "jest"]'
   }
 }, () => {});
